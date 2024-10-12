@@ -175,3 +175,71 @@ function buildTree(arr) {
   }
   return aux(aux1, 0, aux1.length - 1);
 }
+// Function to generate an array of random numbers less than 100
+function generateRandomNumbers(size) {
+    const numbers = [];
+    for (let i = 0; i < size; i++) {
+        numbers.push(Math.floor(Math.random() * 100)); // Random number < 100
+    }
+    return numbers;
+}
+
+// Driver script
+const randomNumbers = generateRandomNumbers(10); // Change the size as needed
+const bst = new Tree(randomNumbers);
+
+// Confirm the tree is balanced
+console.log("Initial tree is balanced:", bst.isBalanced());
+
+// Print all elements in different orders
+console.log("Level Order:");
+bst.levelOrder(node => console.log(node.data));
+
+console.log("Pre Order:");
+bst.preOrder(node => console.log(node.data));
+
+console.log("In Order:");
+bst.inOrder(node => console.log(node.data));
+
+console.log("Post Order:");
+bst.postOrder(node => console.log(node.data));
+
+// Unbalance the tree by adding numbers > 100
+const unbalancedNumbers = [101, 102, 103, 104, 105]; // Add several numbers > 100
+unbalancedNumbers.forEach(num => bst.insert(num));
+
+// Confirm the tree is unbalanced
+console.log("Tree after adding numbers > 100 is balanced:", bst.isBalanced());
+
+// Balance the tree
+bst.rebalance();
+
+// Confirm that the tree is balanced
+console.log("Tree after rebalance is balanced:", bst.isBalanced());
+
+// Print all elements in different orders after rebalancing
+console.log("Level Order after rebalancing:");
+bst.levelOrder(node => console.log(node.data));
+
+console.log("Pre Order after rebalancing:");
+bst.preOrder(node => console.log(node.data));
+
+console.log("In Order after rebalancing:");
+bst.inOrder(node => console.log(node.data));
+
+console.log("Post Order after rebalancing:");
+bst.postOrder(node => console.log(node.data));
+
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+    if (node === null) {
+      return;
+    }
+    if (node.right !== null) {
+      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.left !== null) {
+      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+  };
+prettyPrint(bst.root) ;
